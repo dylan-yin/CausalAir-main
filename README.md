@@ -1,4 +1,4 @@
-# CausalAir: Causal Spatio-Temporal Air Quality Prediction Network
+# CausalAir: Air Quality Prediction with Spatio-Temporal Causal Modeling
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch 1.12+](https://img.shields.io/badge/pytorch-1.12+-red.svg)](https://pytorch.org/)

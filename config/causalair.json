@@ -1,0 +1,129 @@
+{
+    "name": "causalair_causal_air_quality_prediction",
+    "arch": {
+        "type": "CausalAir",
+        "args": {
+            "configs": {
+                "task_name": "forecast",
+                "seq_len": 48,
+                "label_len": 48,
+                "pred_len": 48,
+                "gat_node_features": 7,
+                "mete_features": 56,
+                "mete_update_strategy": "cross_attention",
+                "num_mete_token": 1,
+                "num_aq_token": 3,
+                "num_station_token": 50,
+                "n_station": 1628,
+                "num_stations": 1628,
+                "e_layers": 3,
+                "d_layers": 3,
+                "enc_in": 7,
+                "time_c": 5,
+                "c_out": 7,
+                "d_model": 256,
+                "n_heads": 8,
+                "embed": "timeF",
+                "freq": "h",
+                "dropout": 0.1,
+                "output_attention": true,
+                "use_norm": false,
+                "use_fore": true,
+                "use_mete": true,
+                "spa": true,
+                "pva": true,
+                "class_strategy": "projection",
+                "activation": "gelu",
+                "d_ff": 1024,
+                "num_kernels": 6,
+                "factor": 6,
+                "top_k": 5,
+                "sparsity_weight": 5,
+                "backdoor_attention": {
+                    "enabled": true,
+                    "noise_type": "uniform",
+                    "noise_std": 0.1,
+                    "noise_mean": 0.0,
+                    "noise_seed": 42,
+                    "temperature": 1.0
+                }
+            }
+        }
+    },
+    "train_loader": {
+        "type": "stsdataLoader",
+        "args": {
+            "data_dir": "/mnt/hyin/Datasets/china_stations_data/aq_level_mete/train_data.pkl",
+            "batch_size": 1,
+            "shuffle": true,
+            "num_workers": 8,
+            "training": true
+        }
+    },
+    "valid_loader": {
+        "type": "stsdataLoader",
+        "args": {
+            "data_dir": "/mnt/hyin/Datasets/china_stations_data/aq_level_mete/val_data.pkl",
+            "batch_size": 1,
+            "shuffle": false,
+            "num_workers": 8,
+            "training": false
+        }
+    },
+    "test_loader": {
+        "type": "stsdataLoader",
+        "args": {
+            "data_dir": "/mnt/hyin/Datasets/china_stations_data/aq_level_mete/val_data.pkl",
+            "batch_size": 2,
+            "shuffle": false,
+            "num_workers": 0,
+            "training": false
+        }
+    },
+    "optimizer": {
+        "type": "Adam",
+        "args": {
+            "lr": 0.0001,
+            "weight_decay": 0,
+            "amsgrad": true
+        }
+    },
+    "loss": "MSELoss",
+    "metrics": [
+        "AQI_MAE_112",
+        "AQI_MAE_1324",
+        "AQI_MAE_2548",
+        "AQI_RMSE_112",
+        "AQI_RMSE_1324",
+        "AQI_RMSE_2548",
+        "AQI_MAE",
+        "AQI_RMSE",
+        "Static_L1_Sparsity"
+    ],
+    "lr_scheduler": {
+        "type": "StepLR",
+        "args": {
+            "step_size": 20,
+            "gamma": 0.5
+        }
+    },
+    "temperature_scheduler": {
+        "type": "ExponentialDecay",
+        "args": {
+            "initial_temp": 1.0,
+            "final_temp": 0.1,
+            "decay_epochs": 50,
+            "decay_type": "exponential"
+        }
+    },
+    "trainer": {
+        "epochs": 100,
+        "save_dir": "checkpoints/",
+        "save_period": 10,
+        "start_save_epoch": 9,
+        "verbosity": 2,
+        "monitor": "min val_AQI_MAE",
+        "early_stop": 50,
+        "tensorboard": true
+    }
+}

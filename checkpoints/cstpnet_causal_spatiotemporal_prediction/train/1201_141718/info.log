@@ -1,0 +1,304 @@
+2025-12-01 14:17:39,201 - train - INFO - CSTPNet(
+  (enc_embedding): DataEmbedding_st_v2(
+    (hist_value_embedding): Sequential(
+      (0): Linear(in_features=48, out_features=256, bias=True)
+      (1): GELU(approximate='none')
+      (2): Dropout(p=0.1, inplace=False)
+      (3): Linear(in_features=256, out_features=256, bias=True)
+    )
+    (future_value_embedding): Sequential(
+      (0): Linear(in_features=48, out_features=256, bias=True)
+      (1): GELU(approximate='none')
+      (2): Dropout(p=0.1, inplace=False)
+      (3): Linear(in_features=256, out_features=256, bias=True)
+    )
+    (channel_embedding): ChannelEmbedding()
+    (dropout): Dropout(p=0.1, inplace=False)
+  )
+  (timestamp_embedding): Timestamp_Embedding(
+    (time_embedding_List): ModuleList(
+      (0): Linear(in_features=48, out_features=256, bias=True)
+      (1): Linear(in_features=48, out_features=256, bias=True)
+      (2): Linear(in_features=48, out_features=256, bias=True)
+      (3): Linear(in_features=48, out_features=256, bias=True)
+      (4): Linear(in_features=48, out_features=256, bias=True)
+    )
+    (fore_embedding): Linear(in_features=48, out_features=256, bias=True)
+    (channel_embedding): ChannelEmbedding()
+    (dropout): Dropout(p=0.1, inplace=False)
+  )
+  (encoder): CSTPNetEncoder(
+    (attn_layers): ModuleList(
+      (0): CSTPNetEncoderLayer(
+        (station_self_attention): AttentionLayer(
+          (inner_attention): FullAttention_v42(
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (query_projection): Linear(in_features=256, out_features=256, bias=True)
+          (key_projection): Linear(in_features=256, out_features=256, bias=True)
+          (value_projection): Linear(in_features=256, out_features=256, bias=True)
+          (out_projection): Linear(in_features=256, out_features=256, bias=True)
+        )
+        (variate_self_attention): AttentionLayer(
+          (inner_attention): FullAttention(
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (query_projection): Linear(in_features=256, out_features=256, bias=True)
+          (key_projection): Linear(in_features=256, out_features=256, bias=True)
+          (value_projection): Linear(in_features=256, out_features=256, bias=True)
+          (out_projection): Linear(in_features=256, out_features=256, bias=True)
+        )
+        (future_station_self_attention): AttentionLayer(
+          (inner_attention): FullAttention_v42(
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (query_projection): Linear(in_features=256, out_features=256, bias=True)
+          (key_projection): Linear(in_features=256, out_features=256, bias=True)
+          (value_projection): Linear(in_features=256, out_features=256, bias=True)
+          (out_projection): Linear(in_features=256, out_features=256, bias=True)
+        )
+        (future_variate_self_attention): AttentionLayer(
+          (inner_attention): FullAttention(
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (query_projection): Linear(in_features=256, out_features=256, bias=True)
+          (key_projection): Linear(in_features=256, out_features=256, bias=True)
+          (value_projection): Linear(in_features=256, out_features=256, bias=True)
+          (out_projection): Linear(in_features=256, out_features=256, bias=True)
+        )
+        (hist_mete_updater): AttentionLayer(
+          (inner_attention): FullAttention_v52(
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (query_projection): Linear(in_features=256, out_features=256, bias=True)
+          (key_projection): Linear(in_features=256, out_features=256, bias=True)
+          (value_projection): Linear(in_features=256, out_features=256, bias=True)
+          (out_projection): Linear(in_features=256, out_features=256, bias=True)
+        )
+        (fore_mete_updater): AttentionLayer(
+          (inner_attention): FullAttention_v52(
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (query_projection): Linear(in_features=256, out_features=256, bias=True)
+          (key_projection): Linear(in_features=256, out_features=256, bias=True)
+          (value_projection): Linear(in_features=256, out_features=256, bias=True)
+          (out_projection): Linear(in_features=256, out_features=256, bias=True)
+        )
+        (station_cross_attention): AttentionLayer(
+          (inner_attention): FullAttention_v42(
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (query_projection): Linear(in_features=256, out_features=256, bias=True)
+          (key_projection): Linear(in_features=256, out_features=256, bias=True)
+          (value_projection): Linear(in_features=256, out_features=256, bias=True)
+          (out_projection): Linear(in_features=256, out_features=256, bias=True)
+        )
+        (variate_cross_attention): AttentionLayer(
+          (inner_attention): FullAttention(
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (query_projection): Linear(in_features=256, out_features=256, bias=True)
+          (key_projection): Linear(in_features=256, out_features=256, bias=True)
+          (value_projection): Linear(in_features=256, out_features=256, bias=True)
+          (out_projection): Linear(in_features=256, out_features=256, bias=True)
+        )
+        (conv1_future): Conv1d(256, 1024, kernel_size=(1,), stride=(1,))
+        (conv2_future): Conv1d(1024, 256, kernel_size=(1,), stride=(1,))
+        (norm1_future): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (norm2_future): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (conv1_aq): Conv1d(256, 1024, kernel_size=(1,), stride=(1,))
+        (conv2_aq): Conv1d(1024, 256, kernel_size=(1,), stride=(1,))
+        (norm1_aq): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (norm2_aq): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (1): CSTPNetEncoderLayer(
+        (station_self_attention): AttentionLayer(
+          (inner_attention): FullAttention_v42(
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (query_projection): Linear(in_features=256, out_features=256, bias=True)
+          (key_projection): Linear(in_features=256, out_features=256, bias=True)
+          (value_projection): Linear(in_features=256, out_features=256, bias=True)
+          (out_projection): Linear(in_features=256, out_features=256, bias=True)
+        )
+        (variate_self_attention): AttentionLayer(
+          (inner_attention): FullAttention(
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (query_projection): Linear(in_features=256, out_features=256, bias=True)
+          (key_projection): Linear(in_features=256, out_features=256, bias=True)
+          (value_projection): Linear(in_features=256, out_features=256, bias=True)
+          (out_projection): Linear(in_features=256, out_features=256, bias=True)
+        )
+        (future_station_self_attention): AttentionLayer(
+          (inner_attention): FullAttention_v42(
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (query_projection): Linear(in_features=256, out_features=256, bias=True)
+          (key_projection): Linear(in_features=256, out_features=256, bias=True)
+          (value_projection): Linear(in_features=256, out_features=256, bias=True)
+          (out_projection): Linear(in_features=256, out_features=256, bias=True)
+        )
+        (future_variate_self_attention): AttentionLayer(
+          (inner_attention): FullAttention(
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (query_projection): Linear(in_features=256, out_features=256, bias=True)
+          (key_projection): Linear(in_features=256, out_features=256, bias=True)
+          (value_projection): Linear(in_features=256, out_features=256, bias=True)
+          (out_projection): Linear(in_features=256, out_features=256, bias=True)
+        )
+        (hist_mete_updater): AttentionLayer(
+          (inner_attention): FullAttention_v52(
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (query_projection): Linear(in_features=256, out_features=256, bias=True)
+          (key_projection): Linear(in_features=256, out_features=256, bias=True)
+          (value_projection): Linear(in_features=256, out_features=256, bias=True)
+          (out_projection): Linear(in_features=256, out_features=256, bias=True)
+        )
+        (fore_mete_updater): AttentionLayer(
+          (inner_attention): FullAttention_v52(
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (query_projection): Linear(in_features=256, out_features=256, bias=True)
+          (key_projection): Linear(in_features=256, out_features=256, bias=True)
+          (value_projection): Linear(in_features=256, out_features=256, bias=True)
+          (out_projection): Linear(in_features=256, out_features=256, bias=True)
+        )
+        (station_cross_attention): AttentionLayer(
+          (inner_attention): FullAttention_v42(
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (query_projection): Linear(in_features=256, out_features=256, bias=True)
+          (key_projection): Linear(in_features=256, out_features=256, bias=True)
+          (value_projection): Linear(in_features=256, out_features=256, bias=True)
+          (out_projection): Linear(in_features=256, out_features=256, bias=True)
+        )
+        (variate_cross_attention): AttentionLayer(
+          (inner_attention): FullAttention(
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (query_projection): Linear(in_features=256, out_features=256, bias=True)
+          (key_projection): Linear(in_features=256, out_features=256, bias=True)
+          (value_projection): Linear(in_features=256, out_features=256, bias=True)
+          (out_projection): Linear(in_features=256, out_features=256, bias=True)
+        )
+        (conv1_future): Conv1d(256, 1024, kernel_size=(1,), stride=(1,))
+        (conv2_future): Conv1d(1024, 256, kernel_size=(1,), stride=(1,))
+        (norm1_future): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (norm2_future): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (conv1_aq): Conv1d(256, 1024, kernel_size=(1,), stride=(1,))
+        (conv2_aq): Conv1d(1024, 256, kernel_size=(1,), stride=(1,))
+        (norm1_aq): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (norm2_aq): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (2): CSTPNetEncoderLayer(
+        (station_self_attention): AttentionLayer(
+          (inner_attention): FullAttention_v42(
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (query_projection): Linear(in_features=256, out_features=256, bias=True)
+          (key_projection): Linear(in_features=256, out_features=256, bias=True)
+          (value_projection): Linear(in_features=256, out_features=256, bias=True)
+          (out_projection): Linear(in_features=256, out_features=256, bias=True)
+        )
+        (variate_self_attention): AttentionLayer(
+          (inner_attention): FullAttention(
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (query_projection): Linear(in_features=256, out_features=256, bias=True)
+          (key_projection): Linear(in_features=256, out_features=256, bias=True)
+          (value_projection): Linear(in_features=256, out_features=256, bias=True)
+          (out_projection): Linear(in_features=256, out_features=256, bias=True)
+        )
+        (future_station_self_attention): AttentionLayer(
+          (inner_attention): FullAttention_v42(
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (query_projection): Linear(in_features=256, out_features=256, bias=True)
+          (key_projection): Linear(in_features=256, out_features=256, bias=True)
+          (value_projection): Linear(in_features=256, out_features=256, bias=True)
+          (out_projection): Linear(in_features=256, out_features=256, bias=True)
+        )
+        (future_variate_self_attention): AttentionLayer(
+          (inner_attention): FullAttention(
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (query_projection): Linear(in_features=256, out_features=256, bias=True)
+          (key_projection): Linear(in_features=256, out_features=256, bias=True)
+          (value_projection): Linear(in_features=256, out_features=256, bias=True)
+          (out_projection): Linear(in_features=256, out_features=256, bias=True)
+        )
+        (hist_mete_updater): AttentionLayer(
+          (inner_attention): FullAttention_v52(
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (query_projection): Linear(in_features=256, out_features=256, bias=True)
+          (key_projection): Linear(in_features=256, out_features=256, bias=True)
+          (value_projection): Linear(in_features=256, out_features=256, bias=True)
+          (out_projection): Linear(in_features=256, out_features=256, bias=True)
+        )
+        (fore_mete_updater): AttentionLayer(
+          (inner_attention): FullAttention_v52(
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (query_projection): Linear(in_features=256, out_features=256, bias=True)
+          (key_projection): Linear(in_features=256, out_features=256, bias=True)
+          (value_projection): Linear(in_features=256, out_features=256, bias=True)
+          (out_projection): Linear(in_features=256, out_features=256, bias=True)
+        )
+        (station_cross_attention): AttentionLayer(
+          (inner_attention): FullAttention_v42(
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (query_projection): Linear(in_features=256, out_features=256, bias=True)
+          (key_projection): Linear(in_features=256, out_features=256, bias=True)
+          (value_projection): Linear(in_features=256, out_features=256, bias=True)
+          (out_projection): Linear(in_features=256, out_features=256, bias=True)
+        )
+        (variate_cross_attention): AttentionLayer(
+          (inner_attention): FullAttention(
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (query_projection): Linear(in_features=256, out_features=256, bias=True)
+          (key_projection): Linear(in_features=256, out_features=256, bias=True)
+          (value_projection): Linear(in_features=256, out_features=256, bias=True)
+          (out_projection): Linear(in_features=256, out_features=256, bias=True)
+        )
+        (conv1_future): Conv1d(256, 1024, kernel_size=(1,), stride=(1,))
+        (conv2_future): Conv1d(1024, 256, kernel_size=(1,), stride=(1,))
+        (norm1_future): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (norm2_future): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (conv1_aq): Conv1d(256, 1024, kernel_size=(1,), stride=(1,))
+        (conv2_aq): Conv1d(1024, 256, kernel_size=(1,), stride=(1,))
+        (norm1_aq): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (norm2_aq): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+    )
+    (norm): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+  )
+  (initial_projector): Sequential(
+    (0): Linear(in_features=256, out_features=256, bias=True)
+    (1): GELU(approximate='none')
+    (2): Dropout(p=0.1, inplace=False)
+    (3): Linear(in_features=256, out_features=48, bias=True)
+  )
+  (future_projector): Sequential(
+    (0): Linear(in_features=256, out_features=256, bias=True)
+    (1): GELU(approximate='none')
+    (2): Dropout(p=0.1, inplace=False)
+    (3): Linear(in_features=256, out_features=48, bias=True)
+  )
+  (reconstruct_projector): Sequential(
+    (0): Linear(in_features=256, out_features=256, bias=True)
+    (1): GELU(approximate='none')
+    (2): Dropout(p=0.1, inplace=False)
+    (3): Linear(in_features=256, out_features=48, bias=True)
+  )
+)
+2025-12-01 14:17:39,451 - trainer - INFO - Temperature annealing enabled: 1.0 -> 0.1 over 50 epochs (exponential)
+2025-12-01 14:17:39,934 - trainer - INFO - Epoch 1: Temperature = 1.000000

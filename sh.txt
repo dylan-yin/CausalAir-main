@@ -1,0 +1,33 @@
+#继承自STformer_v6.73_new_norm
+#给未来要预测的部分也设一个表征，加上空间位置编码，使用网络来更新。
+# 获得是未来的时序和这些历史变量的时空相关性（这样才能获得时空因果解释）。
+
+conda activate ear5
+conda activate paddle 
+
+conda activate ai4s
+cd /mnt/hyin/workspace/STformer_v6.73_new_norm/
+
+python main.py --config_filename config.yaml
+CUDA_VISIBLE_DEVICES=1  python train.py -c "./config/stformer_surface.json"
+
+CUDA_VISIBLE_DEVICES=3  python train.py -c "./config/stformer.json"
+CUDA_VISIBLE_DEVICES=3  python test.py -r "/lustre/home/hyin/workspace/AI4S/ddp/checkpoints/gat_lstm_sh/train/1215_235206/model_best.pth"
+
+CUDA_VISIBLE_DEVICES=1  python st_test.py -r "/mnt/hyin/checkpoints/stformer_V6/stformer_V62_512_MLP_l6_lrnew/train/1209_051441/model_best.pth"
+
+CUDA_VISIBLE_DEVICES=4 python train.py -c "./config/gat_lstm.json" 
+CUDA_VISIBLE_DEVICES=4 python train.py -c "./config/aoto.json" 
+CUDA_VISIBLE_DEVICES=5 python train.py -c "./config/lstm.json"
+CUDA_VISIBLE_DEVICES=5 python train.py -c "./config/timenet.json"
+CUDA_VISIBLE_DEVICES=6 python train.py -c "./config/informer.json"
+CUDA_VISIBLE_DEVICES=1  python train.py -c "./config/gattimenet.json"
+CUDA_VISIBLE_DEVICES=2  python train.py -c "./config/gattimenetmm_cq.json"
+CUDA_VISIBLE_DEVICES=3  python train.py -c "./config/stformer.json" --seq_len 12
+CUDA_VISIBLE_DEVICES=1  python train.py -c "./config/patchSTS.json" --seq_len 144
+CUDA_VISIBLE_DEVICES=1  python train.py -c "./config/astgcn.json"
+CUDA_VISIBLE_DEVICES=3  python train.py -c "./config/mtgnn.json"
+
+
+
+paconvert --in_dir ddp --out_dir /lustre/home/hyin/workspace/AI4S/ddp_paddle --exclude_dirs ddp/checkpoint,ddp/attns --log_dir log --log_level "INFO" --run_check 1
